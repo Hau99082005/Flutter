@@ -59,7 +59,7 @@ class AuthController {
         });
         //handle the reponse using the managehttpresponse
         manageHttpResonse(reponse: reponse, context: context, onSuccess: () {
-          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>const MainScreen()),
+          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> MainScreen()),
               (route) => false);
           showSnackBar(context, 'Logged Successfully!');
         });

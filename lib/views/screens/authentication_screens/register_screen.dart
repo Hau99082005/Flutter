@@ -1,12 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:window_app/controllers/auth_controller.dart';
 import 'package:window_app/views/screens/authentication_screens/login_screen.dart';
 
-class RegisterScreen extends StatelessWidget {
+class RegisterScreen extends StatefulWidget {
+      @override
+    State<RegisterScreen> createState() => _RegisterScreenState();
+}
+
+class _RegisterScreenState extends State<RegisterScreen> {
  final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+ final AuthController _authController = AuthController();
   late String email;
   late String fullname;
   late String password;
+  bool isLoading = false;
+
+  registerUser() async {
+    setState(() {
+      isLoading = true;
+    });
+    await _authController.signUpUsers(context: context,
+        email: email,
+        fullname: fullname,
+        password: password).whenComplete((){
+         setState(() {
+           isLoading = false;
+         });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -101,6 +124,9 @@ class RegisterScreen extends StatelessWidget {
               height: 15,
              ),
                     TextFormField(
+                      onChanged: (value) {
+                        password = value;
+                      },
                       validator: (value) {
                         if(value!.isEmpty) {
                           return "enter your password";
@@ -125,15 +151,13 @@ class RegisterScreen extends StatelessWidget {
                 suffixIcon: Icon(Icons.visibility),
               ),
              ),
-             SizedBox(height: 20,),
+             const SizedBox(height: 20,),
             InkWell(
-              onTap: () {
-                if(_formkey.currentState!.validate()) {
-                  print('correct');
-                }else {
-                  print('failed');
-                }
-              },
+             onTap: () async {
+              if(_formkey.currentState!.validate()) {
+                  registerUser();
+              }
+             },
              child: Container(
              width: 320,
              height: 50,
@@ -181,7 +205,8 @@ class RegisterScreen extends StatelessWidget {
                       ),
                     ),),),
                     Center(
-                      child: Text('Sign Up', style: GoogleFonts.getFont('Lato',color: Colors.white,fontSize: 18,
+                      child: isLoading ? const
+                      CircularProgressIndicator(color: Colors.white):Text('Sign Up', style: GoogleFonts.getFont('Lato',color: Colors.white,fontSize: 18,
                       fontWeight: FontWeight.bold),),
                     )
               ],

@@ -1,40 +1,47 @@
 import 'package:flutter/material.dart';
-import 'package:window_app/views/screens/nav_screens/Cart_screen.dart';
-import 'package:window_app/views/screens/nav_screens/Stores_screen.dart';
-import 'package:window_app/views/screens/nav_screens/account_screen.dart';
-import 'package:window_app/views/screens/nav_screens/category_screen.dart';
-import 'package:window_app/views/screens/nav_screens/favorite_screen.dart';
-import 'package:window_app/views/screens/nav_screens/home_screen.dart';
+import 'package:window_app/models/category.dart';
+import 'package:window_app/views/screens/detail/screens/widgets/inner_category_content_widget.dart';
+import '../../nav_screens/Cart_screen.dart';
+import '../../nav_screens/Stores_screen.dart';
+import '../../nav_screens/account_screen.dart';
+import '../../nav_screens/category_screen.dart';
+import '../../nav_screens/favorite_screen.dart';
 
-class MainScreen extends StatefulWidget {
+class InnerCategoryScreen extends StatefulWidget {
+  final Category category;
+
+  const InnerCategoryScreen({super.key, required this.category});
+
   @override
-  State<MainScreen> createState() => _MainScreenState();
+  State<InnerCategoryScreen> createState() => _InnerCategoryScreenState();
 }
 
-class _MainScreenState extends State<MainScreen> {
-  int _pageIndex = 0;
-  final List<Widget> _pages = [
-    const HomeScreen(),
-    const FavoriteScreen(),
-    const CategoryScreen(),
-    const StoresScreen(),
-    const CartScreen(),
-    AccountScreen(),
-  ];
-
+class _InnerCategoryScreenState extends State<InnerCategoryScreen> {
+  int pageIndex = 0;
   @override
   Widget build(BuildContext context) {
+
+    final List<Widget> pages = [
+      InnerCategoryContentWidget(category: widget.category,),
+      const FavoriteScreen(),
+      const CategoryScreen(),
+      const StoresScreen(),
+      const CartScreen(),
+       AccountScreen(),
+    ];
+
     return Scaffold(
+
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: Colors.purple,
         unselectedItemColor: Colors.grey,
 
-        currentIndex: _pageIndex,
+        currentIndex: pageIndex,
         type: BottomNavigationBarType.fixed,
         onTap: (value) {
           setState(() {
             setState(() {
-              _pageIndex = value;
+              pageIndex = value;
             });
           });
         },
@@ -85,7 +92,8 @@ class _MainScreenState extends State<MainScreen> {
           ),
         ],
       ),
-      body: _pages[_pageIndex],
+      body: pages[pageIndex],
     );
   }
 }
+

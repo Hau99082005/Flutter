@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:window_app/views/screens/detail/screens/widgets/ThemeSwitch.dart';
 import 'package:window_app/views/screens/nav_screens/widgets/banner_widget.dart';
 import 'package:window_app/views/screens/nav_screens/widgets/category_item_widget.dart';
 import 'package:window_app/views/screens/nav_screens/widgets/header_widget.dart';
@@ -14,6 +15,7 @@ class HomeScreen extends StatelessWidget {
          children: [
            HeaderWidget(),
            BannerWidget(),
+           Themeswitch(),
            CategoryItemWidget(),
          ],
        ),

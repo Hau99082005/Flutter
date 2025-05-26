@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-class HeaderWidget extends StatelessWidget {
-  const HeaderWidget({super.key});
+class InnerHeaderWidget extends StatelessWidget {
+  const InnerHeaderWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
+
     final screenWidth = MediaQuery.of(context).size.width;
     final bannerHeight = screenWidth * 0.32;
-
-    return SizedBox(
+    return  SizedBox(
       width: screenWidth,
       height: bannerHeight,
       child: Stack(
@@ -26,7 +26,7 @@ class HeaderWidget extends StatelessWidget {
             ),
           ),
 
-          // Search and icons Row
+          // Row với nút back, search và icon
           Align(
             alignment: Alignment.center,
             child: Padding(
@@ -34,7 +34,15 @@ class HeaderWidget extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  // Search box (shorter width)
+                  // Nút back
+                  IconButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    icon: const Icon(Icons.arrow_back, color: Colors.white),
+                  ),
+
+                  const SizedBox(width: 8),
+
+                  // Search box
                   Expanded(
                     flex: 7,
                     child: Container(
@@ -45,19 +53,22 @@ class HeaderWidget extends StatelessWidget {
                           BoxShadow(
                             color: Colors.black12,
                             blurRadius: 6,
-                            offset: Offset(0, 3),
+                            offset: const Offset(0, 3),
                           ),
                         ],
                       ),
                       child: TextField(
-                        style: TextStyle(fontSize: 14),
+                        style: const TextStyle(fontSize: 14),
                         decoration: InputDecoration(
-                          hintText: 'Enter text...',
+                          hintText: 'Enter text',
                           hintStyle: TextStyle(
                             fontSize: 14,
                             color: Colors.grey[600],
                           ),
-                          contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 14,
+                          ),
                           prefixIcon: Padding(
                             padding: const EdgeInsets.all(10.0),
                             child: Image.asset(
@@ -72,8 +83,8 @@ class HeaderWidget extends StatelessWidget {
                     ),
                   ),
 
-
                   const SizedBox(width: 10),
+
                   // Camera icon
                   _iconButton('assets/icons/cam.png'),
 
@@ -93,28 +104,26 @@ class HeaderWidget extends StatelessWidget {
         ],
       ),
     );
-
   }
-
-  Widget _iconButton(String assetPath) {
-    return Material(
-      type: MaterialType.transparency,
-      child: InkWell(
-        onTap: () {
-          // TODO: Define action
-        },
-        borderRadius: BorderRadius.circular(16),
-        child: Ink(
-          width: 32,
-          height: 32,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(assetPath),
-              fit: BoxFit.contain,
-            ),
+}
+Widget _iconButton(String assetPath) {
+  return Material(
+    type: MaterialType.transparency,
+    child: InkWell(
+      onTap: () {
+        // TODO: Define action
+      },
+      borderRadius: BorderRadius.circular(16),
+      child: Ink(
+        width: 32,
+        height: 32,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(assetPath),
+            fit: BoxFit.contain,
           ),
         ),
       ),
-    );
-  }
+    ),
+  );
 }
